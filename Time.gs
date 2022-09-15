@@ -6,7 +6,6 @@ class Time {
   this.setTime();
   this.setFormTime();
   }
-
   toString() {
   return `${this.timeStr.substring(0, this.timeStr.lastIndexOf(":"))} ${this.timeStr.substring(this.timeStr.indexOf(" ") + 1)}`;
   }
