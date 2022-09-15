@@ -22,49 +22,6 @@ var child3Price = 0;
 var emailRow = 0;
 var latestEntry = [];
 
-class Time {
-  constructor(timeStr) {
-  this.timeStr = timeStr;
-  this.setHours();
-  this.setMinutes();
-  this.setTime();
-  this.setFormTime();
-  }
-
-  toString() {
-  return `${this.timeStr.substring(0, this.timeStr.lastIndexOf(":"))} ${this.timeStr.substring(this.timeStr.indexOf(" ") + 1)}`;
-  }
-  setHours() {
-    var hr = parseInt(this.timeStr.substring(0, this.timeStr.indexOf(":")));
-  var amPm = this.timeStr.substring(this.timeStr.indexOf(" ") + 1);
-  if (amPm == "AM" && hr == 12) {hr = "00";}
-  if (amPm == "PM") {hr = (12 + (hr % 12));}
-    this.hr = hr;
-  }
-  setMinutes() {
-    var min = this.timeStr.substring(this.timeStr.indexOf(":") + 1);
-    this.min = parseInt(min.substring(0, min.indexOf(":")));
-  }
-  setTime() {
-  this.time = (this.getHours() * 60) + this.getMinutes();
-  }
-  setFormTime() {
-    this.formTime = `${addLeadingZeroIfNone(this.getHours())}:${addLeadingZeroIfNone(this.getMinutes())}`;
-  }
-  getHours() {
-    return this.hr;
-  }
-  getMinutes() {
-    return this.min;
-  }
-  getTime() {
-  return this.time;
-  }
-  getFormTime() {
-    return this.formTime;
-  }
-}
-
 function manualSend() {
   var rowToSend = 62;
   emailRow = rowToSend;
@@ -248,15 +205,8 @@ function emailPrice() {
 function getTimeStr(dateObj) {
   var hours = dateObj.getHours();
   var amOrPm = hours >= 12 ? 'PM' : 'AM';
-  hours = (addLeadingZeroIfNone(hours % 12)) || 12;
-  return `${hours}:${addLeadingZeroIfNone(dateObj.getMinutes())}:00 ${amOrPm}`;
-}
-
-function addLeadingZeroIfNone(num) {
-  if (num.toString().length == 1) {
-    num = "0" + num;
-  }
-  return num;
+  hours = (Time.addLeadingZeroIfNone(hours % 12)) || 12;
+  return `${hours}:${Time.addLeadingZeroIfNone(dateObj.getMinutes())}:00 ${amOrPm}`;
 }
 
  String.prototype.getFormTime = function () {
@@ -268,12 +218,12 @@ function addLeadingZeroIfNone(num) {
     if (str == "") {return "";}
     else {
       str = str.split("/");
-      return `${str[2]}-${addLeadingZeroIfNone(str[1])}-${addLeadingZeroIfNone(str[0])}`;
+      return `${str[2]}-${Time.addLeadingZeroIfNone(str[1])}-${Time.addLeadingZeroIfNone(str[0])}`;
     }
 };
 
  Date.prototype.getFormDate = function () {
-   return `${this.getFullYear()}-${addLeadingZeroIfNone(this.getMonth() + 1)}-${addLeadingZeroIfNone(this.getDate())}`;
+   return `${this.getFullYear()}-${Time.addLeadingZeroIfNone(this.getMonth() + 1)}-${Time.addLeadingZeroIfNone(this.getDate())}`;
  }
 
   function emailError() {
