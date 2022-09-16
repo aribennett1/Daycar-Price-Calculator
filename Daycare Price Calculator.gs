@@ -205,7 +205,7 @@ function emailPrice() {
 function getTimeStr(dateObj) {
   var hours = dateObj.getHours();
   var amOrPm = hours >= 12 ? 'PM' : 'AM';
-  hours = (Time.addLeadingZeroIfNone(hours % 12)) || 12;
+  hours % 12 == 0 ? hours = 12 : hours = Time.addLeadingZeroIfNone(hours % 12);
   return `${hours}:${Time.addLeadingZeroIfNone(dateObj.getMinutes())}:00 ${amOrPm}`;
 }
 
